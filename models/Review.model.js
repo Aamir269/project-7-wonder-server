@@ -5,7 +5,15 @@ const ReviewSchema = new Schema({
     author: {
         type: Schema.Types.ObjectId,
         ref: 'User'
+    },
+    wonder:{
+        type: Schema.Types.ObjectId,
+        ref: 'Wonder'
     }
-});
+    },
+    {
+    timestamps: true,
+  }
+);
 
 module.exports = model("Review", ReviewSchema);

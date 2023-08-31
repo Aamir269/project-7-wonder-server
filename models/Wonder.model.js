@@ -13,7 +13,7 @@ const WonderSchema = new Schema({
     reviews: [
         {
             type: Schema.Types.ObjectId,
-            ref: "WorderCities"
+            ref: "Review"
         }
     ]
 });

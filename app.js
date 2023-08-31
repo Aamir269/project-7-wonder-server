@@ -18,6 +18,9 @@ require("./config")(app);
 const indexRoutes = require("./routes/index.routes");
 app.use("/api", indexRoutes);
 
+const wonderRoutes = require("./routes/woder.routes");
+app.use("/api", wonderRoutes);
+
 const authRoutes = require("./routes/auth.routes");
 app.use("/auth", authRoutes);
 

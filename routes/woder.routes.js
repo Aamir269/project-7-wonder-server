@@ -6,7 +6,7 @@ const Review = require("../models/Review.model")
 
 router.get("/wonder", async(req, res) => {
     try{
-        let allWonder = Wonder.find().populate("WorderCities");
+        let allWonder = await Wonder.find();
         res.json(allWonder);
     }catch(error){
         res.json(error);
@@ -16,7 +16,7 @@ router.get("/wonder", async(req, res) => {
 router.get('/wonder/:id', async(req, res) =>{
     const {id} = req.params;
     try{
-        let foundWonder = await Wonder.findById(id).populate('WorderCities');
+        let foundWonder = await Wonder.findById(id);
         res.json(foundWonder);
     }catch(error){
         res.json(error);
@@ -36,11 +36,12 @@ router.get("/wonders/:id/reviews", async(req, res) =>{
 
 router.post("/wonders/:id/reviews", async(req,res) =>{
     const {reviewId} = req.params;
-    const {name, description, location} = req.body;
+    const {name, description} = req.body;
 
     try{
-        let newReview = await Review.create({description, name, location, review: reviewId });
+        let newReview = await Review.create({description, name, review: reviewId });
         let response = await Review.foundByIdAndUpdate(reviewId, {$push:{reviews: newReview.id}});
+        res.json(response);
     }catch(error){
         res.json(error);
     }
@@ -48,10 +49,10 @@ router.post("/wonders/:id/reviews", async(req,res) =>{
 
 router.put('/wonders/:id/reviews/:reviewId', async(req, res) => {
  const { reviewId } = req.params;
- const { description } = req.body;
+ const { name, description } = req.body;
 
  try{
-    let updateReview = await Review.foundByIdAndUpdate(reviewId, {description}, {new: true});
+    let updateReview = await Review.foundByIdAndUpdate(reviewId, {name, description}, {new: true});
     res.json(updateReview);
  }catch(error){
     res.json(error);

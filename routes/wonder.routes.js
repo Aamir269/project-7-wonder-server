@@ -1,9 +1,7 @@
 const router = require("express").Router();
 const mongoose = require("mongoose");
-
 const Wonder = require("../models/Wonder.model");
 const Review = require("../models/Review.model")
-
 const {isAuthenticated} = require("../middleware/jwt.middleware")
 
 router.get("/wonder", async(req, res) => {

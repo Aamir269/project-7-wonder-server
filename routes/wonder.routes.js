@@ -4,6 +4,8 @@ const mongoose = require("mongoose");
 const Wonder = require("../models/Wonder.model");
 const Review = require("../models/Review.model")
 
+const {isAuthenticated} = require("../middleware/jwt.middleware")
+
 router.get("/wonder", async(req, res) => {
     try{
         let allWonder = await Wonder.find();
@@ -34,14 +36,16 @@ router.get("/wonder/:id/reviews", async(req, res) =>{
     }
 });
 
-router.post("/wonder/:id/reviews", async(req,res) =>{
-    const {reviewId} = req.params;
-    const {author, content} = req.body;
+router.post("/wonder/:id/reviews", isAuthenticated, async(req,res) =>{
+    const {id} = req.params;
+    const {content} = req.body;
+    const user = req.payload
 
     try{
-        let newReview = await Review.create({content, author, review: reviewId });
-        let response = await Review.foundByIdAndUpdate(reviewId, {$push:{reviews: newReview.id}});
-        res.json(response);
+        let newReview = await Review.create({content});
+        await Review.findByIdAndUpdate(newReview._id, {$push:{author: user._id}});
+        await Wonder.findByIdAndUpdate(id, {$push:{reviews: newReview._id}})
+        res.json(newReview);
     }catch(error){
         res.json(error);
     }
@@ -59,7 +63,7 @@ router.put('/wonder/:id/reviews/:reviewId', async(req, res) => {
  }
 });
 
-router.delete("/wonder/:id/reviews/:reviewId", async(req, res) => {
+router.delete("/wonder/:id/deleteReviews/:reviewId", async(req, res) => {
     const {reviewId} = req.params;
 
     try{

@@ -49,6 +49,17 @@ router.post("/wonder/:id/reviews", isAuthenticated, async(req,res) =>{
     }
 });
 
+router.get('/wonder/:id/reviews/:reviewId', async(req, res) => {
+    const { reviewId } = req.params;
+
+    try{
+        let foundReview = await Review.findById(reviewId);
+        res.json(foundReview);
+    }catch(error){
+        res.json(error);
+    }
+});
+
 router.put('/wonder/:id/reviews/:reviewId', async(req, res) => {
  const { reviewId } = req.params;
  const { author, content } = req.body;

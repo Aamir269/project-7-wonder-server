@@ -73,11 +73,13 @@ router.put('/wonder/:id/reviews/:reviewId', async(req, res) => {
 });
 
 router.delete("/wonder/:id/deleteReviews/:reviewId", async(req, res) => {
-    const {reviewId} = req.params;
+    const {reviewId, id} = req.params;
 
     try{
-        await reviewId.findByIdAndDelete(reviewId);
-        res.json({message: 'Wonder Point Delected'});
+        await Review.findByIdAndDelete(reviewId);
+        await Wonder.findByIdAndUpdate(id, {$pull:{reviews: reviewId}});
+
+        res.json({message: 'Wonder Point Delected'}, deleteReview);
     }catch(error){
         console.log(error);
     }

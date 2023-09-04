@@ -16,7 +16,7 @@ router.get("/wonder", async(req, res) => {
 router.get('/wonder/:id', async(req, res) =>{
     const {id} = req.params;
     try{
-        let foundWonder = await Wonder.findById(id);
+        let foundWonder = await Wonder.findById(id).populate('reviews');
         res.json(foundWonder);
     }catch(error){
         res.json(error);
@@ -24,10 +24,9 @@ router.get('/wonder/:id', async(req, res) =>{
 });
 
 router.get("/wonder/:id/reviews", async(req, res) =>{
-    const { description } = req.body;
 
     try{
-        let response = await Review.create({description});
+        let response = await Review.find();
         res.json(response);
     }catch(error){
         console.log(error);
@@ -79,7 +78,7 @@ router.delete("/wonder/:id/deleteReviews/:reviewId", async(req, res) => {
         await Review.findByIdAndDelete(reviewId);
         await Wonder.findByIdAndUpdate(id, {$pull:{reviews: reviewId}});
 
-        res.json({message: 'Wonder Point Delected'}, deleteReview);
+        res.json({message: 'Wonder Point Delected'});
     }catch(error){
         console.log(error);
     }

@@ -4,6 +4,7 @@ const Wonder = require("../models/Wonder.model");
 const Review = require("../models/Review.model");
 const User = require("../models/User.model");
 const { isAuthenticated } = require("../middleware/jwt.middleware");
+const { forEachTrailingCommentRange } = require("typescript");
 
 router.get("/wonder", async (req, res) => {
   try {
@@ -59,6 +60,30 @@ router.get("/wonder/:id/reviews/:reviewId", async (req, res) => {
 
   try {
     let foundReview = await Review.findById(reviewId);
+    res.json(foundReview);
+  } catch (error) {
+    res.json(error);
+  }
+});
+
+router.get('/wonder/:userId/reviews', async (req, res) => {
+    // check if user did particular review
+  const { userId } = req.params;
+
+  try {
+    let foundReview = await Review.where({author: userId});
+    res.json(foundReview);
+  } catch (error) {
+    res.json(error);
+  }
+});
+
+router.get('/wonder/:userId/reviews', async (req, res) => {
+    // check if user did particular review
+  const { userId } = req.params;
+
+  try {
+    let foundReview = await Review.where({author: userId});
     res.json(foundReview);
   } catch (error) {
     res.json(error);

@@ -120,7 +120,7 @@ router.delete("/wonder/:id/reviews/:reviewId", async (req, res) => {
 });
 
 router.post(
-  "/api/user/addVisit-wonder/:wonderId",
+  "/user/addVisit-wonder/:wonderId",
   isAuthenticated,
   async (req, res) => {
     const { wonderId } = req.params;

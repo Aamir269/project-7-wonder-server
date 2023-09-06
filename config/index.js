@@ -22,11 +22,13 @@ module.exports = (app) => {
   app.set("trust proxy", 1);
 
   // controls a very specific header to pass headers from the frontend
-  app.use(
-    cors({
-      origin: [FRONTEND_URL, "http://localhost:5173"],
-    })
-  );
+// Add "https://gentle-sable-afcb8d.netlify.app" to the list of allowed origins
+app.use(
+  cors({
+    origin: [FRONTEND_URL, "http://localhost:5173", "https://gentle-sable-afcb8d.netlify.app"],
+  })
+);
+
 
   // In development environment the app logs
   app.use(logger("dev"));

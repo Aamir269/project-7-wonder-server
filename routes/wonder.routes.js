@@ -86,18 +86,6 @@ router.get('/wonder/:userId/reviews', async (req, res) => {
   }
 });
 
-router.get('/wonder/:userId/reviews', async (req, res) => {
-    // check if user did particular review
-  const { userId } = req.params;
-
-  try {
-    let foundReview = await Review.where({author: userId});
-    res.json(foundReview);
-  } catch (error) {
-    res.json(error);
-  }
-});
-
 router.put("/wonder/:id/reviews/:reviewId", async (req, res) => {
   const { reviewId } = req.params;
   const { content } = req.body;

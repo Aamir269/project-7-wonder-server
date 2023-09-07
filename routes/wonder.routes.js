@@ -37,6 +37,15 @@ router.get("/wonder/:id/reviews", async (req, res) => {
   }
 });
 
+router.get("/users", async (req, res) => {
+  try {
+    let allUser = await User.find();
+    res.json(allUser);
+  } catch (error) {
+    res.json(error);
+  }
+});
+
 router.post("/wonder/:id/reviews", isAuthenticated, async (req, res) => {
   const { id } = req.params;
   const { content } = req.body;
@@ -69,9 +78,8 @@ router.get("/wonder/:id/reviews/:reviewId", async (req, res) => {
 router.get('/wonder/:userId/reviews', async (req, res) => {
     // check if user did particular review
   const { userId } = req.params;
-
   try {
-    let foundReview = await Review.where({author: userId});
+    let foundReview = await Reviews.findById(userId);
     res.json(foundReview);
   } catch (error) {
     res.json(error);

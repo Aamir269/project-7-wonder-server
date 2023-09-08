@@ -13,7 +13,7 @@ const cookieParser = require("cookie-parser");
 // unless the request is made from the same domain, by default express wont accept POST requests
 const cors = require("cors");
 
-const FRONTEND_URL =   "https://gentle-sable-afcb8d.netlify.app";
+const FRONTEND_URL = "https://subtle-cupcake-826b22.netlify.app";
 
 // Middleware configuration
 module.exports = (app) => {
@@ -22,13 +22,12 @@ module.exports = (app) => {
   app.set("trust proxy", 1);
 
   // controls a very specific header to pass headers from the frontend
-// Add "https://gentle-sable-afcb8d.netlify.app" to the list of allowed origins
-app.use(
-  cors({
-    origin: [FRONTEND_URL, "http://localhost:5173"],
-  })
-);
-
+  // Add "https://gentle-sable-afcb8d.netlify.app" to the list of allowed origins
+  app.use(
+    cors({
+      origin: [FRONTEND_URL],
+    })
+  );
 
   // In development environment the app logs
   app.use(logger("dev"));

@@ -13,7 +13,7 @@ const cookieParser = require("cookie-parser");
 // unless the request is made from the same domain, by default express wont accept POST requests
 const cors = require("cors");
 
-const FRONTEND_URL =   "https://seven-wonder-of-the-world.onrender.com";
+const FRONTEND_URL =   "https://gentle-sable-afcb8d.netlify.app";
 
 // Middleware configuration
 module.exports = (app) => {
@@ -25,7 +25,7 @@ module.exports = (app) => {
 // Add "https://gentle-sable-afcb8d.netlify.app" to the list of allowed origins
 app.use(
   cors({
-    origin: [FRONTEND_URL, "http://localhost:5173", "https://gentle-sable-afcb8d.netlify.app"],
+    origin: [FRONTEND_URL, "http://localhost:5173"],
   })
 );
 
